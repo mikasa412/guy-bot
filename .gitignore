@@ -1,0 +1,6 @@
+.env
+node_modules/
+currentQuestion.json
+src/daily-programming/questions/
+dist/
+runtime/
