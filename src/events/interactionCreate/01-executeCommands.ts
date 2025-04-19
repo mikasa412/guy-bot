@@ -1,5 +1,6 @@
 import type { Client, Interaction } from "discord.js";
 
+// Execute slash commands
 export default async function handleInteraction(
   client: Client,
   interaction: Interaction

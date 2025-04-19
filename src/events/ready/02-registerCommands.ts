@@ -15,7 +15,7 @@ export interface CommandModule {
 export default async function registerCommands(client: Client) {
   client.commands = new Collection<string, CommandModule>();
 
-  // 2) Load & cache every command under src/commands/<group>/*.ts
+  // Load & cache every command under src/commands/<group>/*.ts
   const commandsRoot = path.join(__dirname, "..", "..", "commands");
   const groups = fs
     .readdirSync(commandsRoot, { withFileTypes: true })
@@ -52,10 +52,10 @@ export default async function registerCommands(client: Client) {
 
   console.log(`✅ Cached ${total} command(s) in client.commands`);
 
-  // 3) Deploy (bulk overwrite) to Discord
+  // bulk overwrite to Discord
   if (!client.application) {
     console.warn(
-      "⚠️ client.application is undefined; are you calling this before `ready`?"
+      "client.application is undefined; are you calling this before `ready`?"
     );
   } else {
     const payload = client.commands.map((cmd) => cmd.data.toJSON());
