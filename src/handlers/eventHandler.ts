@@ -41,7 +41,7 @@ export default function registerEvents(client: Client) {
       });
 
     console.log(
-      `Registered and cached ${handlers.length} handler(s) for event "${folder}".`
+      `✅ Registered and cached ${handlers.length} handler(s) for event "${folder}".`
     );
 
     const listener = (...args: any[]) => {
@@ -57,5 +57,5 @@ export default function registerEvents(client: Client) {
     client.on(folder as keyof ClientEvents, listener);
   }
 
-  console.log(`Total event groups loaded: ${eventFolders.length}`);
+  console.log(`✅ Total event groups loaded: ${eventFolders.length}`);
 }
