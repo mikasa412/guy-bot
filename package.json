@@ -1,15 +1,15 @@
 {
-  "name": "discord-bot-template",
-  "version": "0.0.0",
-  "description": "",
+  "name": "guy-bot",
+  "version": "0.1.1",
+  "description": "simple discord bot for me to build skill",
   "main": "src/index.js",
   "scripts": {
     "build": "tsc",
     "dev": "nodemon",
     "start": "node ./dist/index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [bot],
+  "author": "mikasa",
   "license": "MIT",
   "dependencies": {
     "discord.js": "^14.18.0",
