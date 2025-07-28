@@ -1,3 +1,14 @@
 {
-    "testServer": ""
+    "template": {
+        "ID": {
+            "suggestions": "suggestID",
+            "voting": "voteID",
+            "todo": "todoID"
+        }
+    },
+    "config": {
+        "servers": {
+            
+        }
+    }
 }
