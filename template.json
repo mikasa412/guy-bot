@@ -1,0 +1,7 @@
+{
+    "ID": {
+        "voting": "voteID",
+        "todo": "todoID",
+        "modrole": "modRoleID"
+    }
+}

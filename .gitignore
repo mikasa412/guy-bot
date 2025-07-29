@@ -1,6 +1,5 @@
 .env
 node_modules/
-currentQuestion.json
-src/daily-programming/questions/
+config.json
 dist/
 runtime/
