@@ -40,7 +40,7 @@ export async function execute(
       return;
     }
     if (cooldown === 0) {
-      config.servers[serverId].cooldown = 86400;
+      config.servers[serverId].cooldown = 86400000;
     }
     config.servers[serverId].cooldown = `${cooldown}000`;
 
