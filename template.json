@@ -3,6 +3,6 @@
         "voting": "voteID",
         "todo": "todoID",
         "modrole": "modRoleID",
-        "cooldown": 86400
+        "cooldown": 86400000
     }
 }
