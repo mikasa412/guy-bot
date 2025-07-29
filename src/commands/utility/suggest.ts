@@ -34,6 +34,7 @@ export async function execute(
   // Send to voting channel
   const votingChannel = await interaction.guild.channels.fetch(serverConfig.voting);
   const todoChannel = await interaction.guild.channels.fetch(serverConfig.todo);
+  const cooldown = serverConfig.cooldown;
   if (votingChannel && votingChannel.isTextBased()) {
       const sentMsg = await votingChannel.send({ embeds: [embed] });
       await sentMsg.react("✅");
@@ -53,6 +54,6 @@ export async function execute(
                   await todoChannel.send({ embeds: [todoEmbed] });
               }
           }
-      }, 20000); //24 * 60 * 60 * 1000); // 24 hours in milliseconds
+      }, cooldown);
   } else await interaction.reply("voting channel not found or is not a text channel.");
 }

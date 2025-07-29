@@ -2,6 +2,7 @@
     "ID": {
         "voting": "voteID",
         "todo": "todoID",
-        "modrole": "modRoleID"
+        "modrole": "modRoleID",
+        "cooldown": 86400
     }
 }
