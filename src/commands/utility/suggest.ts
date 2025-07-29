@@ -19,7 +19,7 @@ export async function execute(
 ) {
   // Load config
   const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
-  const serverConfig = config.config.servers[interaction.guild.id];
+  const serverConfig = config.servers[interaction.guild.id];
   const suggestion = interaction.options.getString("suggestion", true);
   if (!serverConfig) {
     interaction.reply("This server is not registered. Use /register first.");
