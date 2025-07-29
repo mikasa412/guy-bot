@@ -1,18 +1,32 @@
 {
+<<<<<<< HEAD
   "name": "discord-bot-template",
   "version": "0.0.0",
   "description": "",
+=======
+  "name": "guy-bot",
+  "version": "0.1.1",
+  "description": "simple discord bot for me to build skill",
+>>>>>>> e30db9ea3492612aad6341a2658acbdcf24716d3
   "main": "src/index.js",
   "scripts": {
     "build": "tsc",
     "dev": "nodemon",
     "start": "node ./dist/index.js"
   },
+<<<<<<< HEAD
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "discord.js": "^14.21.0",
+=======
+  "keywords": ["bot"],
+  "author": "mikasa",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.18.0",
+>>>>>>> e30db9ea3492612aad6341a2658acbdcf24716d3
     "dotenv": "^16.5.0"
   },
   "devDependencies": {
