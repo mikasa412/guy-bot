@@ -5,8 +5,8 @@ import * as path from "path";
 const configPath = path.join(__dirname, "../../../config.json");
 
 export const data = new SlashCommandBuilder()
-  .setName("setcooldown")
-  .setDescription("updates suggestion cooldown")
+  .setName("settimer")
+  .setDescription("sets amount of time (seconds) that suggestions can be voted on")
   .addIntegerOption(option =>
     option.setName("cooldown")
       .setDescription("Cooldown in seconds, default (0) is 24 hours")
@@ -40,7 +40,7 @@ export async function execute(
       return;
     }
     if (cooldown === 0) {
-      config.servers[serverId].cooldown = 86400000;
+      config.servers[serverId].cooldown = "86400000";
     }
     config.servers[serverId].cooldown = `${cooldown}000`;
 

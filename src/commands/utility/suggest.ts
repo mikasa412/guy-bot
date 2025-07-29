@@ -48,10 +48,12 @@ export async function execute(
               const xCount = pollMsg.reactions.cache.get("❌")?.count || 0;
               if (checkCount > xCount) {
                   const todoEmbed = new EmbedBuilder()
-                      .setDescription(`Suggestion: ${suggestion}`)
+                      .setDescription(`Suggestion: ${suggestion}\nVotes: ✅ ${checkCount-1} ❌ ${xCount-1}`)
                       .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
                       .setTimestamp();
                   await todoChannel.send({ embeds: [todoEmbed] });
+              } else {
+                  await todoChannel.send(`Suggestion: ${suggestion} was rejected with ${checkCount-1} votes for and ${xCount-1} votes against.`);
               }
           }
       }, cooldown);
