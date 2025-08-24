@@ -46,5 +46,9 @@ export async function execute(
 
     // Save config
     fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
-    await interaction.reply(`Suggestion cooldown updated to ${cooldown} seconds.`);
+    if (cooldown === 0) {
+      await interaction.reply("Suggestion cooldown updated to 24 hours.");
+    } else {
+      await interaction.reply(`Suggestion cooldown updated to ${cooldown} seconds.`);
+    }
 }

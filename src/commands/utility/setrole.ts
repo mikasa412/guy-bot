@@ -48,7 +48,7 @@ export async function execute(
     if (config.servers[serverId].modrole) {
       const member = interaction.member as GuildMember;
       if (!member || !member.roles.cache.has(config.servers[serverId].modrole)) {
-        await interaction.reply("no mod role LMAO");
+        await interaction.reply("no mod role <smirk:1405976248697749665>");
         return;
       }
     }

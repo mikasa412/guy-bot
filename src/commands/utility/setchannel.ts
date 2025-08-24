@@ -6,7 +6,7 @@ const configPath = path.join(__dirname, "../../../config.json");
 
 export const data = new SlashCommandBuilder()
   .setName("setchannel")
-  .setDescription("updates set channel in config file")
+  .setDescription("(mod) updates set channel in config file")
   .addStringOption(option =>
     option.setName("channel_type")
       .setDescription("Which channel to set")
