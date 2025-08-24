@@ -40,13 +40,13 @@ export async function execute(
 
     // Check if server was registered
     if (!config.servers[serverId]) {
-      await interaction.reply("Register the server first using /register.");
+      await interaction.reply("use /register first");
       return;
     }
 
     // Check if modrole exists
     if (!config.servers[serverId].modrole) {
-      await interaction.reply("Mod role not set. Use /setrole to set it first.");
+      await interaction.reply("use /setrole to make a mod role first");
       return;
     }
     const modRoleId = config.servers[serverId].modrole;
@@ -54,7 +54,7 @@ export async function execute(
     // Check if user has mod role
     const member = interaction.member as GuildMember;
     if (!member || !member.roles.cache.has(modRoleId)) {
-      await interaction.reply("You do not have permission to use this command.");
+      await interaction.reply("no mod role <smirk:1405976248697749665>");
       return;
     }
 
