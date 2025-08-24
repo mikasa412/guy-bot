@@ -12,14 +12,17 @@ export async function execute(
 ) {
   const serverId = interaction.guildId;
   if (!serverId) {
-    await interaction.reply("This command must be used in a server.");
+    await interaction.reply("yep, viewing server config in dms makes sense");
     return;
   }
   const configPath = path.join(__dirname, "../../../config.json");
   const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 
   if (!config.servers[serverId]) {
-    await interaction.reply("Register the server first using /register.");
+    await interaction.reply({
+      content: "use /register first",
+      ephemeral: true
+    });
     return;
   }
 

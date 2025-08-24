@@ -4,6 +4,6 @@
         "todo": "todoID",
         "modrole": "modRoleID",
         "banrole": "banRoleID",
-        "cooldown": 86400000
+        "timer": 86400000
     }
 }

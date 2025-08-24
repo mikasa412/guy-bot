@@ -15,7 +15,7 @@ export async function execute(
 ) {
   const serverId = interaction.guildId;
   if (!serverId) {
-    await interaction.reply("This command must be used in a server.");
+    await interaction.reply("get in a server?? why are you using this command in dms");
     return;
   }
 
@@ -25,7 +25,7 @@ export async function execute(
 
   // Check if server already exists
   if (config.servers[serverId]) {
-    await interaction.reply("This server is already registered.");
+    await interaction.reply("it's already registered");
     return;
   }
 
@@ -40,5 +40,5 @@ export async function execute(
 
   // Save config
   fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
-  await interaction.reply("Server registered successfully!");
+  await interaction.reply("server registered!");
 }

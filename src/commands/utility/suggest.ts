@@ -25,16 +25,28 @@ export async function execute(
 
   // edge cases
   if (!serverConfig) {
-    interaction.reply("use /register first");
+    interaction.reply({
+      content: "/register the server first",
+      ephemeral: true
+    });
     return;
   } else if (!serverConfig.voting || !serverConfig.todo) {
-    interaction.reply("use /setchannel to set voting/todo channel");
+    interaction.reply({
+      content: "/setchannel the voting/todo channels",
+      ephemeral: true
+    });
     return;
   } else if (!config.servers[interaction.guildId].modrole) {
-    interaction.reply(" use /setrole to set mod role first");
+    interaction.reply({
+      content: "/setrole the mod role first",
+      ephemeral: true
+    });
     return;
   } else if (member.roles.cache.has(serverConfig.banrole)) {
-    interaction.reply("suggestion ban? <:smirk:1408967157106217051>");
+    interaction.reply({
+      content: "suggestion ban? <:smirk:1408967157106217051>",
+      ephemeral: true
+    });
     return;
   }
   // Create embed
@@ -51,7 +63,10 @@ export async function execute(
     const sentMsg = await votingChannel.send({ embeds: [embed] });
     await sentMsg.react("✅");
     await sentMsg.react("❌");
-    await interaction.reply("suggestion sent to the voting channel!");
+    await interaction.reply({
+      content: "suggestion sent to the voting channel!",
+      ephemeral: true
+    });
     setTimeout(async () => {
       if (todoChannel && todoChannel.isTextBased()) {
         // Fetch the message again to get updated reactions
@@ -69,5 +84,8 @@ export async function execute(
         }
       }
     }, cooldown);
-  } else await interaction.reply("voting channel not found or is not a text channel.");
+  } else await interaction.reply({
+    content: "voting channel not found... maybe add it? <smirk:1405976248697749665>",
+    ephemeral: true
+  });
 }

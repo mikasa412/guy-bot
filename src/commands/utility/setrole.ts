@@ -27,7 +27,7 @@ export async function execute(
 ) {
   const serverId = interaction.guildId;
     if (!serverId) {
-      await interaction.reply("This command must be used in a server.");
+      await interaction.reply("??? get out of dms");
       return;
     }
 
@@ -40,15 +40,21 @@ export async function execute(
 
     // Check if server was registered
     if (!config.servers[serverId]) {
-      await interaction.reply("Register the server first using /register.");
+      await interaction.reply({
+        content: "/register the server first",
+        ephemeral: true
+      });
       return;
     }
 
     // Check if user has mod role
     if (config.servers[serverId].modrole) {
       const member = interaction.member as GuildMember;
-      if (!member || !member.roles.cache.has(config.servers[serverId].modrole)) {
-        await interaction.reply("no mod role <smirk:1405976248697749665>");
+      if (!member.roles.cache.has(config.servers[serverId].modrole)) {
+        await interaction.reply({
+          content: "no mod role? <smirk:1405976248697749665>",
+          ephemeral: true
+        });
         return;
       }
     }
@@ -57,13 +63,17 @@ export async function execute(
     if (config.servers[serverId][roleType]) {
       config.servers[serverId][roleType] = role;
     } else {
-      await interaction.reply("role type not in config file, try /update");
+      await interaction.reply({
+        content: "role type not in config file, try /update",
+        ephemeral: true
+      });
       return;
     }
 
-    
-
     // Save config
     fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
-    await interaction.reply(`Role for ${roleType} updated to <@&${role}>.`);
+    await interaction.reply({
+      content: `${roleType} updated to <@&${role}>!`,
+      ephemeral: true
+    });
 }

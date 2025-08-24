@@ -27,7 +27,7 @@ export async function execute(
 ) {
   const serverId = interaction.guildId;
     if (!serverId) {
-      await interaction.reply("This command must be used in a server.");
+      await interaction.reply("get out of dms... what are you doing");
       return;
     }
 
@@ -40,13 +40,19 @@ export async function execute(
 
     // Check if server was registered
     if (!config.servers[serverId]) {
-      await interaction.reply("use /register first");
+      await interaction.reply({
+        content: "use /register first",
+        ephemeral: true
+      });
       return;
     }
 
     // Check if modrole exists
     if (!config.servers[serverId].modrole) {
-      await interaction.reply("use /setrole to make a mod role first");
+      await interaction.reply({
+        content: "use /setrole to make a mod role first",
+        ephemeral: true
+      });
       return;
     }
     const modRoleId = config.servers[serverId].modrole;
@@ -54,7 +60,10 @@ export async function execute(
     // Check if user has mod role
     const member = interaction.member as GuildMember;
     if (!member || !member.roles.cache.has(modRoleId)) {
-      await interaction.reply("no mod role <smirk:1405976248697749665>");
+      await interaction.reply({
+        content: "no mod role? <smirk:1405976248697749665>",
+        ephemeral: true
+      });
       return;
     }
 
@@ -64,5 +73,8 @@ export async function execute(
 
     // Save config
     fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
-    await interaction.reply(`Channel for ${channelType} updated to <#${channel.id}>.`);
+    await interaction.reply({
+      content: `${channelType} channel changed to <#${channel.id}>!`,
+      ephemeral: true
+    });
 }

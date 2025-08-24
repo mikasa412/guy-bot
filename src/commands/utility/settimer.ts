@@ -8,8 +8,8 @@ export const data = new SlashCommandBuilder()
   .setName("settimer")
   .setDescription("sets amount of time (seconds) that suggestions can be voted on")
   .addIntegerOption(option =>
-    option.setName("cooldown")
-      .setDescription("Cooldown in seconds, default (0) is 24 hours")
+    option.setName("time")
+      .setDescription("time in seconds, default (0) is 24 hours")
       .setRequired(true)
   );
 export async function execute(
@@ -18,37 +18,52 @@ export async function execute(
 ) {
   const serverId = interaction.guildId;
     if (!serverId) {
-      await interaction.reply("This command must be used in a server.");
+      await interaction.reply({
+        content: "try a server first",
+        ephemeral: true
+      });
       return;
     }
 
     // Get options
-    const cooldown = interaction.options.getInteger("cooldown", true);
+    const timer = interaction.options.getInteger("timer", true);
 
     // Read config
     const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 
     // Check if server was registered
     if (!config.servers[serverId]) {
-      await interaction.reply("Register the server first using /register.");
+      await interaction.reply({
+        content: "use /register first",
+        ephemeral: true
+      });
       return;
     }
 
     // Update only the specified channel type
-    if (isNaN(cooldown) || cooldown < 0) {
-      await interaction.reply("Please provide a valid cooldown in seconds.");
+    if (timer < 0) {
+      await interaction.reply({
+        content: "what does negative time even mean",
+        ephemeral: true
+      });
       return;
     }
-    if (cooldown === 0) {
-      config.servers[serverId].cooldown = "86400000";
+    if (timer === 0) {
+      config.servers[serverId].timer = "86400000";
     }
-    config.servers[serverId].cooldown = `${cooldown}000`;
+    config.servers[serverId].timer = `${timer}000`;
 
     // Save config
     fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
-    if (cooldown === 0) {
-      await interaction.reply("Suggestion cooldown updated to 24 hours.");
+    if (timer === 0) {
+      await interaction.reply({
+        content: "voting time defaulted to 24 hours",
+        ephemeral: true
+      });
     } else {
-      await interaction.reply(`Suggestion cooldown updated to ${cooldown} seconds.`);
+      await interaction.reply({
+        content: `voting time updated to ${timer} seconds.`,
+        ephemeral: true
+      });
     }
 }

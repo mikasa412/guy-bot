@@ -15,7 +15,7 @@ export async function execute(
 ) {
   const serverId = interaction.guildId;
   if (!serverId) {
-    await interaction.reply("This command must be used in a server.");
+    await interaction.reply("why are you using this in dms... get in a server");
     return;
   }
 
@@ -46,13 +46,22 @@ export async function execute(
 
     if (updated) {
       fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
-      await interaction.reply("Server config updated to match the template!");
+      await interaction.reply({
+        content: "updated to template!",
+        ephemeral: true
+      });
     } else {
-      await interaction.reply("Server config already matches the template.");
+      await interaction.reply({
+        content:"already matching template... you could ask for new features if you want",
+        ephemeral: true
+      });
     }
     return;
   } else {
-    await interaction.reply("This server is not registered. Use /register first.");
+    await interaction.reply({
+      content: "/register the server first",
+      ephemeral: true
+    });
     return;
   };
 }
