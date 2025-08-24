@@ -26,7 +26,7 @@ export async function execute(
     }
 
     // Get options
-    const timer = interaction.options.getInteger("timer", true);
+    const timer = interaction.options.getInteger("time", true);
 
     // Read config
     const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
