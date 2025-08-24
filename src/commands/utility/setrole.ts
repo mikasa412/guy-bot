@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, Client, CommandInteraction, ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, Client, GuildMember, ChatInputCommandInteraction } from "discord.js";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -6,13 +6,14 @@ const configPath = path.join(__dirname, "../../../config.json");
 
 export const data = new SlashCommandBuilder()
   .setName("setrole")
-  .setDescription("updates mod role in config file")
+  .setDescription("(mod) updates role types in config file (set mod role first)")
   .addStringOption(option =>
-    option.setName("role_type")
-      .setDescription("Which role to set (only mod role currently)")
+    option.setName("type")
+      .setDescription("which role to set")
       .setRequired(true)
       .addChoices(
-        { name: "mod role", value: "modrole" }
+        { name: "mod", value: "modrole" },
+        { name: "suggestion ban", value: "banrole" }
       )
   )
   .addStringOption(option =>
@@ -31,7 +32,7 @@ export async function execute(
     }
 
     // Get options
-    const roleType = interaction.options.getString("role_type", true);
+    const roleType = interaction.options.getString("type", true);
     const role = interaction.options.getString("role", true);
 
     // Read config
@@ -43,8 +44,24 @@ export async function execute(
       return;
     }
 
-    // Update only the specified channel type
-    config.servers[serverId][roleType] = role;
+    // Check if user has mod role
+    if (config.servers[serverId].modrole) {
+      const member = interaction.member as GuildMember;
+      if (!member || !member.roles.cache.has(config.servers[serverId].modrole)) {
+        await interaction.reply("no mod role LMAO");
+        return;
+      }
+    }
+
+    // If role exists in server config, update it
+    if (config.servers[serverId][roleType]) {
+      config.servers[serverId][roleType] = role;
+    } else {
+      await interaction.reply("role type not in config file, try /update");
+      return;
+    }
+
+    
 
     // Save config
     fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
