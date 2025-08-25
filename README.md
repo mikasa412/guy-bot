@@ -21,6 +21,6 @@ then paste this in:
 ```
 
 ## legal
-made from the Discord.js TypeScript Bot Template - https://github.com/nullpointerexceptionkek/Discord.js-TypeScript-Bot-Template
+made from @nullpointerexceptionkek's [Discord.js TypeScript Bot Template](https://github.com/nullpointerexceptionkek/Discord.js-TypeScript-Bot-Template)
 
-This project is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for details.
+This project is licensed under the MIT License - see [LICENSE.md](LICENSE.md) for details.

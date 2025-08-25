@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, Client, CommandInteraction, ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, Client, ChatInputCommandInteraction } from "discord.js";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -49,9 +49,9 @@ export async function execute(
       return;
     }
     if (timer === 0) {
-      config.servers[serverId].timer = "86400000";
+      config.servers[serverId].timer = 86400;
     }
-    config.servers[serverId].timer = `${timer}000`;
+    config.servers[serverId].timer = timer;
 
     // Save config
     fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
@@ -62,7 +62,7 @@ export async function execute(
       });
     } else {
       await interaction.reply({
-        content: `voting time updated to ${timer} seconds.`,
+        content: `voting time updated to ${timer} seconds`,
         ephemeral: true
       });
     }

@@ -20,12 +20,12 @@ export default async function handleInteraction(
     console.error(`[${interaction.commandName}] execution error:`, err);
     if (interaction.replied || interaction.deferred) {
       await interaction.followUp({
-        content: "❌ There was an error running this command!",
+        content: "❌ There was an error running this command! \n if this command is new, try /update first!",
         ephemeral: true,
       });
     } else {
       await interaction.reply({
-        content: "❌ There was an error running this command!",
+        content: "❌ There was an error running this command! \n if this command is new, try /update first!",
         ephemeral: true,
       });
     }

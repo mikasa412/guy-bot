@@ -58,7 +58,7 @@ export async function execute(
   // Send to voting channel
   const votingChannel = await interaction.guild.channels.fetch(serverConfig.voting);
   const todoChannel = await interaction.guild.channels.fetch(serverConfig.todo);
-  const cooldown = serverConfig.cooldown;
+  const timer = serverConfig.timer * 1000;
   if (votingChannel && votingChannel.isTextBased()) {
     const sentMsg = await votingChannel.send({ embeds: [embed] });
     await sentMsg.react("✅");
@@ -83,9 +83,9 @@ export async function execute(
             await todoChannel.send(`Suggestion: ${suggestion} was rejected with ${checkCount-1} votes for and ${xCount-1} votes against.`);
         }
       }
-    }, cooldown);
+    }, timer);
   } else await interaction.reply({
-    content: "voting channel not found... maybe add it? <smirk:1405976248697749665>",
+    content: "voting channel not found... maybe add it? <smirk:1408967157106217051>",
     ephemeral: true
   });
 }
