@@ -2,8 +2,10 @@
     "ID": {
         "voting": "voteID",
         "todo": "todoID",
+        "logchannel": "logID",
+        "logs": false,
         "modrole": "modRoleID",
         "banrole": "banRoleID",
-        "timer": 86400000
+        "timer": 86400
     }
 }

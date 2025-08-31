@@ -1,0 +1,28 @@
+import type { Client, GuildMember, Interaction } from "discord.js";
+import { EmbedBuilder, TextChannel } from "discord.js";
+import * as fs from "fs";
+import * as path from "path";
+
+// Execute slash commands
+export default async function handleInteraction(
+  client: Client,
+  interaction: Interaction
+) {
+  if (!interaction.isChatInputCommand()) return;
+  if (!interaction.guild) return;
+  if (!interaction.guildId) return;
+
+  const configPath = path.join(__dirname, "../../../config.json");
+  const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+  const serverConfig = config.servers[interaction.guild.id];
+  const logChannel = await client.channels.fetch(serverConfig.logchannel);
+  const logs = serverConfig.logs;
+    if (!logs) return;
+
+  if (logChannel && logChannel.isTextBased() && logChannel instanceof TextChannel) {
+    await logChannel.send({
+      content: `<@${interaction.user.id}> used /${interaction.commandName} in <#${interaction.channel?.id}>`,
+      flags: [4096] // silences ping
+    });
+  }
+}

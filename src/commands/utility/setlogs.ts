@@ -5,22 +5,16 @@ import * as path from "path";
 const configPath = path.join(__dirname, "../../../config.json");
 
 export const data = new SlashCommandBuilder()
-  .setName("setchannel")
-  .setDescription("(mod) updates set channel in config file")
+  .setName("setlogs")
+  .setDescription("(mod) turns logs on/off (channel must be set first)")
   .addStringOption(option =>
-    option.setName("channel_type")
-      .setDescription("Which channel to set")
+    option.setName("option")
+      .setDescription("on/off")
       .setRequired(true)
       .addChoices(
-        { name: "voting", value: "voting" },
-        { name: "todo", value: "todo" },
-        { name: "log", value: "logchannel" }
+        { name: "on", value: "1" },
+        { name: "off", value: "0" },
       )
-  )
-  .addChannelOption(option =>
-    option.setName("channel")
-      .setDescription("The channel to set")
-      .setRequired(true)
   );
 export async function execute(
   client: Client,
@@ -31,10 +25,6 @@ export async function execute(
       await interaction.reply("get out of dms... what are you doing");
       return;
     }
-
-    // Get options
-    const channelType = interaction.options.getString("channel_type", true);
-    const channel = interaction.options.getChannel("channel", true);
 
     // Read config
     const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
@@ -68,14 +58,15 @@ export async function execute(
       return;
     }
 
+    const option = interaction.options.getString("option") ? true : false;
     
     // Update the channel type
-    config.servers[serverId][channelType] = channel.id;
+    config.servers[serverId].logs = option;
 
     // Save config
     fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
     await interaction.reply({
-      content: `${channelType} channel changed to <#${channel.id}>!`,
+      content: (option ? `logs turned on` : `logs turned off`),
       ephemeral: true
     });
 }
