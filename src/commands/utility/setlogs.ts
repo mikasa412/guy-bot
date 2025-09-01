@@ -58,7 +58,7 @@ export async function execute(
       return;
     }
 
-    const option = interaction.options.getString("option") ? true : false;
+    const option = parseInt(interaction.options.getString("option")) ? true : false;
     
     // Update the channel type
     config.servers[serverId].logs = option;
