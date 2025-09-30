@@ -27,7 +27,8 @@ export async function execute(
   }
 
   var serverConfig = JSON.stringify(config.servers[serverId], null, 4);
-  serverConfig = serverConfig.replace(/[{}]/g, ""); // prevent breaking markdown code block
+  serverConfig = serverConfig.replace(/[{}]/g, "");
+  serverConfig = serverConfig.replace(/"|,/g, "");
   serverConfig = serverConfig.trimEnd();
 
   const embed = new EmbedBuilder()

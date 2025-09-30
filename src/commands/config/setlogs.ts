@@ -39,20 +39,18 @@ export async function execute(
     }
 
     // Check if modrole exists
-    if (!config.servers[serverId].modrole) {
+    if (config.servers[serverId].modrole) {
+      const member = interaction.member as GuildMember;
+      if (!member.roles.cache.has(config.servers[serverId].modrole.replace(/[<@&>]/g, ""))) {
+        await interaction.reply({
+          content: "no mod role? <smirk:1405976248697749665>",
+          ephemeral: true
+        });
+        return;
+      }
+    } else {
       await interaction.reply({
-        content: "use /setrole to make a mod role first",
-        ephemeral: true
-      });
-      return;
-    }
-    const modRoleId = config.servers[serverId].modrole;
-
-    // Check if user has mod role
-    const member = interaction.member as GuildMember;
-    if (!member || !member.roles.cache.has(modRoleId)) {
-      await interaction.reply({
-        content: "no mod role? <smirk:1405976248697749665>",
+        content: "set a mod role first with /setrole",
         ephemeral: true
       });
       return;

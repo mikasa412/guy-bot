@@ -15,7 +15,7 @@ export default async function handleInteraction(
   const configPath = path.join(__dirname, "../../../config.json");
   const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
   const serverConfig = config.servers[interaction.guild.id];
-  const logChannel = await client.channels.fetch(serverConfig.logchannel);
+  const logChannel = await client.channels.fetch(serverConfig.logChannel.replace(/[<@#>]/g, ""));
   const logs = serverConfig.logs;
     if (!logs) return;
 

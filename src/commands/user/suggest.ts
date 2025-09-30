@@ -56,8 +56,8 @@ export async function execute(
       .setTimestamp();
 
   // Send to voting channel
-  const votingChannel = await interaction.guild.channels.fetch(serverConfig.voting);
-  const todoChannel = await interaction.guild.channels.fetch(serverConfig.todo);
+  const votingChannel = await interaction.guild.channels.fetch(serverConfig.voting.replace(/[<@#>]/g, ""));
+  const todoChannel = await interaction.guild.channels.fetch(serverConfig.todo.replace(/[<@#>]/g, ""));
   const timer = serverConfig.timer * 1000;
   if (votingChannel && votingChannel.isTextBased()) {
     const sentMsg = await votingChannel.send({ embeds: [embed] });

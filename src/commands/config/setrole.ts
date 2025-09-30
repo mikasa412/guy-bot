@@ -16,9 +16,9 @@ export const data = new SlashCommandBuilder()
         { name: "suggestion ban", value: "banrole" }
       )
   )
-  .addStringOption(option =>
+  .addRoleOption(option =>
     option.setName("role")
-      .setDescription("The role to set (ID)")
+      .setDescription("The role to set")
       .setRequired(true)
   );
 export async function execute(
@@ -33,7 +33,7 @@ export async function execute(
 
     // Get options
     const roleType = interaction.options.getString("type", true);
-    const role = interaction.options.getString("role", true);
+    const role = interaction.options.getRole("role", true);
 
     // Read config
     const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
@@ -50,18 +50,24 @@ export async function execute(
     // Check if user has mod role
     if (config.servers[serverId].modrole) {
       const member = interaction.member as GuildMember;
-      if (!member.roles.cache.has(config.servers[serverId].modrole)) {
+      if (!member.roles.cache.has(config.servers[serverId].modrole.replace(/[<@&>]/g, ""))) {
         await interaction.reply({
           content: "no mod role? <smirk:1405976248697749665>",
           ephemeral: true
         });
         return;
       }
+    } else {
+      await interaction.reply({
+        content: "set a mod role first with /setrole",
+        ephemeral: true
+      });
+      return;
     }
 
     // If role exists in server config, update it
     if (config.servers[serverId][roleType]) {
-      config.servers[serverId][roleType] = role;
+      config.servers[serverId][roleType] = `<@&${role.id}>`;
     } else {
       await interaction.reply({
         content: "role type not in config file, try /update",
@@ -73,7 +79,7 @@ export async function execute(
     // Save config
     fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
     await interaction.reply({
-      content: `${roleType} updated to <@&${role}>!`,
+      content: `${roleType} updated to ${role}!`,
       ephemeral: true
     });
 }

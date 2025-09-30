@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, Client, ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, Client, GuildMember, ChatInputCommandInteraction } from "discord.js";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -35,6 +35,23 @@ export async function execute(
     if (!config.servers[serverId]) {
       await interaction.reply({
         content: "use /register first",
+        ephemeral: true
+      });
+      return;
+    }
+
+    if (config.servers[serverId].modrole) {
+      const member = interaction.member as GuildMember;
+      if (!member.roles.cache.has(config.servers[serverId].modrole.replace(/[<@&>]/g, ""))) {
+        await interaction.reply({
+          content: "no mod role? <smirk:1405976248697749665>",
+          ephemeral: true
+        });
+        return;
+      }
+    } else {
+      await interaction.reply({
+        content: "set a mod role first with /setrole",
         ephemeral: true
       });
       return;
