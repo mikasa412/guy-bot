@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, Client, CommandInteraction } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder, Client, CommandInteraction } from "discord.js";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -26,5 +26,16 @@ export async function execute(
     return;
   }
 
-  await interaction.reply(`Current server config:\n\`\`\`json\n${JSON.stringify(config.servers[serverId], null, 4)}\n\`\`\``);
+  var serverConfig = JSON.stringify(config.servers[serverId], null, 4);
+  serverConfig = serverConfig.replace(/[{}]/g, ""); // prevent breaking markdown code block
+  serverConfig = serverConfig.trimEnd();
+
+  const embed = new EmbedBuilder()
+        .setDescription(serverConfig)
+        .setTimestamp();
+
+  await interaction.reply({
+    content: "current server config:",
+    embeds: [embed]
+  });
 }

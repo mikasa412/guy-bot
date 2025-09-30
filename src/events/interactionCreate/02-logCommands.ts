@@ -20,9 +20,9 @@ export default async function handleInteraction(
     if (!logs) return;
 
   if (logChannel && logChannel.isTextBased() && logChannel instanceof TextChannel) {
-    await logChannel.send({
-      content: `<@${interaction.user.id}> used /${interaction.commandName} in <#${interaction.channel?.id}>`,
-      flags: [4096] // silences ping
-    });
+    const embed = new EmbedBuilder()
+      .setDescription(`<@${interaction.user.id}> used /${interaction.commandName} in <#${interaction.channel?.id}>`)
+      .setTimestamp();
+    await logChannel.send({ embeds: [embed] });
   }
 }
