@@ -4,6 +4,7 @@ import * as path from "path";
 
 const configPath = path.join(__dirname, "../../../config.json");
 const templatePath = path.join(__dirname, "../../../template.json");
+const reactionsPath = path.join(__dirname, "../../../reactions.json");
 
 export const data = new SlashCommandBuilder()
   .setName("register")
@@ -22,16 +23,21 @@ export async function execute(
   // Read config
   const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
   const template = JSON.parse(fs.readFileSync(templatePath, "utf-8")).ID;
+  const reactions = JSON.parse(fs.readFileSync(reactionsPath, "utf-8"));
 
   // Check if server already exists
   if (config.servers[serverId]) {
-    await interaction.reply("it's already registered");
+    await interaction.reply("it's already registered, use /update");
     return;
   }
 
   // Add server to config
   config.servers[serverId] = {};
   const serverConfig = config.servers[serverId];
+
+  // Add server to reactions
+  reactions.servers[serverId] = [];
+  fs.writeFileSync(reactionsPath, JSON.stringify(reactions, null, 4));
 
   // Add template
   for (const key in template) {
