@@ -4,6 +4,7 @@
         "todo": "todoID",
         "logchannel": "logID",
         "logs": false,
+        "lockpolls": false,
         "modrole": "modRoleID",
         "banrole": "banRoleID",
         "timer": 86400

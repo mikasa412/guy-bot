@@ -48,6 +48,12 @@ export async function execute(
       ephemeral: true
     });
     return;
+  } else if (serverConfig.lockpolls) {
+    interaction.reply({
+      content: "polls are locked... ask a mod to unlock them",
+      ephemeral: true
+    });
+    return;
   }
   // Create embed
   const embed = new EmbedBuilder()
