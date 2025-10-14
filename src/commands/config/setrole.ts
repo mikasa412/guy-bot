@@ -48,7 +48,7 @@ export async function execute(
     }
 
     // Check if user has mod role
-    if (config.servers[serverId].modrole) {
+    if (config.servers[serverId].modrole != "modRoleID") {
       const member = interaction.member as GuildMember;
       if (!member.roles.cache.has(config.servers[serverId].modrole.replace(/[<@&>]/g, ""))) {
         await interaction.reply({
@@ -57,9 +57,9 @@ export async function execute(
         });
         return;
       }
-    } else {
+    } else if (!interaction.memberPermissions?.has("Administrator")) {
       await interaction.reply({
-        content: "set a mod role first with /setrole",
+        content: "administrator required!!!!! get outta here",
         ephemeral: true
       });
       return;
