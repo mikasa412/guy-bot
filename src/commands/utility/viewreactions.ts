@@ -15,7 +15,7 @@ export async function execute(
     await interaction.reply("server! child");
     return;
   }
-  const reactPath = path.join(__dirname, "../../../reactions.json");
+  const reactPath = path.join(__dirname, "../../../config.json");
   const config = JSON.parse(fs.readFileSync(reactPath, "utf-8"));
 
   if (!config.servers[serverId]) {
@@ -26,7 +26,7 @@ export async function execute(
     return;
   }
 
-  var serverConfig = JSON.stringify(config.servers[serverId], null, 4);
+  var serverConfig = JSON.stringify(config.reactions[serverId], null, 4);
   serverConfig = serverConfig.replace(/[{\[\]}]/g, "");
   serverConfig = serverConfig.replace(/"|,/g, "");
   serverConfig = serverConfig.trimEnd();

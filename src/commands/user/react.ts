@@ -2,7 +2,7 @@ import { SlashCommandBuilder, Client, GuildMember, ChatInputCommandInteraction, 
 import * as fs from "fs";
 import * as path from "path";
 
-const reactPath = path.join(__dirname, "../../../reactions.json");
+const reactPath = path.join(__dirname, "../../../config.json");
 
 export const data = new SlashCommandBuilder()
   .setName("react")
@@ -13,7 +13,7 @@ export async function execute(
 ) {
   // Load config
   const config = JSON.parse(fs.readFileSync(reactPath, "utf-8"));
-  const serverReactions = config.servers[interaction.guildId];
+  const serverReactions = config.reactions[interaction.guildId];
   const member = interaction.member as GuildMember;
 
   // edge cases
@@ -27,7 +27,7 @@ export async function execute(
 
   //grab reaction
   
-  if (serverReactions.length === 0) { return interaction.reply('no reactions yet?'); }
+  if (serverReactions.length < 2) { return interaction.reply('add some more first! idk why but it breaks ok'); }
 
   const msgindex = Math.floor(Math.random() * serverReactions.length);
   const msgtosend = serverReactions[msgindex] as string;

@@ -23,7 +23,7 @@ export async function execute(
   // Read config
   const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
   const template = JSON.parse(fs.readFileSync(templatePath, "utf-8")).ID;
-  const reactions = JSON.parse(fs.readFileSync(reactionsPath, "utf-8"));
+  const reactions = config.reactions;
 
   // Check if server already exists
   if (config.servers[serverId]) {
@@ -36,9 +36,8 @@ export async function execute(
   const serverConfig = config.servers[serverId];
 
   // Add server to reactions
-  reactions.servers[serverId] = [];
-  fs.writeFileSync(reactionsPath, JSON.stringify(reactions, null, 4));
-
+  reactions[serverId] = [];
+  
   // Add template
   for (const key in template) {
     serverConfig[key] = template[key];

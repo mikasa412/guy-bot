@@ -11,11 +11,14 @@ make a suggestion using the command /suggest, and hook up voting and to do list 
 - **/register** and */update*: adds/updates your server in the config file. used for keeping track of the last 3 commands.
 - **/viewconfig**: just outputs the current server's chunk of the json file. *can someone tell me how to make this look better*
 
-**if for some reason you want to use this bot, make a config.json (and a reactions.json) file before running! **
-then paste this into both:
+**if for some reason you want to use this bot, make a config.json file before running! **
+then paste this into it:
 ```
 {
     "servers": {
+
+    },
+    "reactions": {
 
     }
 }

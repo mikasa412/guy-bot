@@ -52,7 +52,7 @@ export async function execute(
       const member = interaction.member as GuildMember;
       if (!member.roles.cache.has(config.servers[serverId].modrole.replace(/[<@&>]/g, ""))) {
         await interaction.reply({
-          content: "no mod role? <smirk:1405976248697749665>",
+          content: "no mod role? <:smirk:1408967157106217051>",
           ephemeral: true
         });
         return;

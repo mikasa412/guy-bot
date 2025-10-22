@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, Client, GuildMember, ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, Client, GuildMember, ChatInputCommandInteraction, Colors } from "discord.js";
 import { EmbedBuilder } from "discord.js";
 import * as fs from "fs";
 import * as path from "path";
@@ -67,8 +67,9 @@ export async function execute(
   const timer = serverConfig.timer * 1000;
   if (votingChannel && votingChannel.isTextBased()) {
     const sentMsg = await votingChannel.send({ embeds: [embed] });
-    await sentMsg.react("✅");
-    await sentMsg.react("❌");
+    await sentMsg.react("<:yes:1430633436355498014>");
+    await sentMsg.react("<:cabbit:1430633387642716181>");
+    await sentMsg.react("<:no:1430633462989193287>");
     await interaction.reply({
       content: "suggestion sent to the voting channel!",
       ephemeral: true
@@ -77,17 +78,20 @@ export async function execute(
       if (todoChannel && todoChannel.isTextBased()) {
         // Fetch the message again to get updated reactions
         const pollMsg = await votingChannel.messages.fetch(sentMsg.id);
-        const checkCount = pollMsg.reactions.cache.get("✅")?.count || 0;
-        const xCount = pollMsg.reactions.cache.get("❌")?.count || 0;
-        if (checkCount > xCount) {
-            const todoEmbed = new EmbedBuilder()
-              .setDescription(`Suggestion: ${suggestion}\nVotes: ✅ ${checkCount-1} ❌ ${xCount-1}`)
-              .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
-              .setTimestamp();
-            await todoChannel.send({ embeds: [todoEmbed] });
-        } else {
-            await todoChannel.send(`Suggestion: ${suggestion} was rejected with ${checkCount-1} votes for and ${xCount-1} votes against.`);
-        }
+        const checkCount = pollMsg.reactions.cache.get("1430633436355498014")?.count || 0;
+        const cabbitCount = pollMsg.reactions.cache.get("1430633387642716181")?.count || 0;
+        const xCount = pollMsg.reactions.cache.get("1430633462989193287")?.count || 0;
+        const cabbitWins = cabbitCount > checkCount && cabbitCount > xCount;
+        const yesWins = checkCount > cabbitCount && checkCount > xCount;
+        const noWins = xCount > cabbitCount && xCount > checkCount;
+        const color = cabbitWins ? Colors.Fuchsia : yesWins ? Colors.Green : noWins ? Colors.Red : Colors.Yellow;
+        const cabbitMessage = cabbitWins ? `\nCabbit has spoken! This suggestion ${Math.random() > 0.5 ? "will" : "will NOT"} be added!!` : "";
+        const todoEmbed = new EmbedBuilder()
+          .setDescription(`Suggestion: ${suggestion}\nVotes: <:yes:1430633436355498014> ${checkCount-1} <:cabbit:1430633387642716181> ${cabbitCount-1} <:no:1430633462989193287> ${xCount-1} ${cabbitMessage}`)
+          .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
+          .setTimestamp()
+          .setColor(color);
+        await todoChannel.send({ embeds: [todoEmbed] });
       }
     }, timer);
   } else await interaction.reply({
