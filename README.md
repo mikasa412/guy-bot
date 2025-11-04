@@ -14,7 +14,7 @@ then paste this into it:
 ```
 {
     "servers": {},
-    "reactions": {}
+    "reactions": []
 }
 ```
 there are a few custom emojis you need to change if you want to use this for yourself (this is just for my server, I'm fine if you use my code but the github is only up for archival)
