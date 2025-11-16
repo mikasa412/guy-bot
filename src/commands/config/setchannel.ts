@@ -39,19 +39,10 @@ export async function execute(
     // Read config
     const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 
-    // Check if server was registered
-    if (!config.servers[serverId]) {
-      await interaction.reply({
-        content: "use /register first",
-        ephemeral: true
-      });
-      return;
-    }
-
     // Check if modrole exists
-    if (config.servers[serverId].modrole) {
+    if (config.settings.modrole) {
       const member = interaction.member as GuildMember;
-      if (!member.roles.cache.has(config.servers[serverId].modrole.replace(/[<@&>]/g, ""))) {
+      if (!member.roles.cache.has(config.settings.modrole.replace(/[<@&>]/g, ""))) {
         await interaction.reply({
           content: "no mod role? <:smirk:1408967157106217051>",
           ephemeral: true
@@ -68,7 +59,7 @@ export async function execute(
 
     
     // Update the channel type
-    config.servers[serverId][channelType] = `<#${channel.id}>`;
+    config.settings[channelType] = `<#${channel.id}>`;
 
     // Save config
     fs.writeFileSync(configPath, JSON.stringify(config, null, 4));

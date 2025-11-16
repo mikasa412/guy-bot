@@ -13,22 +13,10 @@ export async function execute(
 ) {
   // Load config
   const config = JSON.parse(fs.readFileSync(reactPath, "utf-8"));
-  const serverReactions = config.reactions[interaction.guildId];
+  const serverReactions = config.reactions;
   const member = interaction.member as GuildMember;
 
-  // edge cases
-  if (!serverReactions) {
-    interaction.reply({
-      content: "/register the server first",
-      ephemeral: true
-    });
-    return;
-  }
-
   //grab reaction
-  
-  if (serverReactions.length < 2) { return interaction.reply('add some more first! idk why but it breaks ok'); }
-
   const msgindex = Math.floor(Math.random() * serverReactions.length);
   const msgtosend = serverReactions[msgindex] as string;
 

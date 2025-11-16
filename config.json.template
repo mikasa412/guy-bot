@@ -1,12 +1,13 @@
 {
-    "ID": {
+    "settings": {
         "voting": "voteID",
         "todo": "todoID",
         "logchannel": "logID",
-        "logs": false,
+        "logs": true,
         "lockpolls": false,
         "modrole": "modRoleID",
         "banrole": "banRoleID",
-        "timer": 86400
-    }
+        "timer": 12600
+    },
+    "reactions": []
 }

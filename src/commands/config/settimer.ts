@@ -31,18 +31,9 @@ export async function execute(
     // Read config
     const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 
-    // Check if server was registered
-    if (!config.servers[serverId]) {
-      await interaction.reply({
-        content: "use /register first",
-        ephemeral: true
-      });
-      return;
-    }
-
-    if (config.servers[serverId].modrole) {
+    if (config.settings.modrole) {
       const member = interaction.member as GuildMember;
-      if (!member.roles.cache.has(config.servers[serverId].modrole.replace(/[<@&>]/g, ""))) {
+      if (!member.roles.cache.has(config.settings.modrole.replace(/[<@&>]/g, ""))) {
         await interaction.reply({
           content: "no mod role? <smirk:1405976248697749665>",
           ephemeral: true
@@ -65,10 +56,8 @@ export async function execute(
       });
       return;
     }
-    if (timer === 0) {
-      config.servers[serverId].timer = 86400;
-    }
-    config.servers[serverId].timer = timer;
+    if (timer === 0) { config.settings.timer = 86400; } 
+    else { config.settings.timer = timer; }
 
     // Save config
     fs.writeFileSync(configPath, JSON.stringify(config, null, 4));

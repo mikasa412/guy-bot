@@ -38,19 +38,10 @@ export async function execute(
     // Read config
     const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 
-    // Check if server was registered
-    if (!config.servers[serverId]) {
-      await interaction.reply({
-        content: "/register the server first",
-        ephemeral: true
-      });
-      return;
-    }
-
     // Check if user has mod role
-    if (config.servers[serverId].modrole != "modRoleID") {
+    if (config.settings.modrole != "modRoleID") {
       const member = interaction.member as GuildMember;
-      if (!member.roles.cache.has(config.servers[serverId].modrole.replace(/[<@&>]/g, ""))) {
+      if (!member.roles.cache.has(config.settings.modrole.replace(/[<@&>]/g, ""))) {
         await interaction.reply({
           content: "no mod role? <:smirk:1408967157106217051>",
           ephemeral: true
@@ -66,8 +57,8 @@ export async function execute(
     }
 
     // If role exists in server config, update it
-    if (config.servers[serverId][roleType]) {
-      config.servers[serverId][roleType] = `<@&${role.id}>`;
+    if (config.settings[roleType]) {
+      config.settings[roleType] = `<@&${role.id}>`;
     } else {
       await interaction.reply({
         content: "role type not in config file, try /update",

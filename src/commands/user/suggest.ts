@@ -19,18 +19,11 @@ export async function execute(
 ) {
   // Load config
   const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
-  const serverConfig = config.servers[interaction.guild.id];
   const suggestion = interaction.options.getString("suggestion", true);
   const member = interaction.member as GuildMember;
 
   // edge cases
-  if (!serverConfig) {
-    interaction.reply({
-      content: "/register the server first",
-      ephemeral: true
-    });
-    return;
-  } else if (!serverConfig.voting || !serverConfig.todo) {
+  if (!config.settings.voting || !config.settings.todo) {
     interaction.reply({
       content: "/setchannel the voting/todo channels",
       ephemeral: true
@@ -42,13 +35,13 @@ export async function execute(
       ephemeral: true
     });
     return;
-  } else if (member.roles.cache.has(serverConfig.banrole)) {
+  } else if (member.roles.cache.has(config.settings.banrole)) {
     interaction.reply({
       content: "suggestion ban? <:smirk:1408967157106217051>",
       ephemeral: true
     });
     return;
-  } else if (serverConfig.lockpolls) {
+  } else if (config.settings.lockpolls) {
     interaction.reply({
       content: "polls are locked... ask a mod to unlock them",
       ephemeral: true
@@ -62,9 +55,9 @@ export async function execute(
       .setTimestamp();
 
   // Send to voting channel
-  const votingChannel = await interaction.guild.channels.fetch(serverConfig.voting.replace(/[<@#>]/g, ""));
-  const todoChannel = await interaction.guild.channels.fetch(serverConfig.todo.replace(/[<@#>]/g, ""));
-  const timer = serverConfig.timer * 1000;
+  const votingChannel = await interaction.guild.channels.fetch(config.settings.voting.replace(/[<@#>]/g, ""));
+  const todoChannel = await interaction.guild.channels.fetch(config.settings.todo.replace(/[<@#>]/g, ""));
+  const timer = config.settings.timer * 1000;
   if (votingChannel && votingChannel.isTextBased()) {
     const sentMsg = await votingChannel.send({ embeds: [embed] });
     await sentMsg.react("<:yes:1430633436355498014>");

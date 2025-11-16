@@ -18,15 +18,7 @@ export async function execute(
   const reactPath = path.join(__dirname, "../../../config.json");
   const config = JSON.parse(fs.readFileSync(reactPath, "utf-8"));
 
-  if (!config.servers[serverId]) {
-    await interaction.reply({
-      content: "use /register first",
-      ephemeral: true
-    });
-    return;
-  }
-
-  var serverConfig = JSON.stringify(config.reactions[serverId], null, 4);
+  var serverConfig = JSON.stringify(config.reactions, null, 4);
   serverConfig = serverConfig.replace(/[{\[\]}]/g, "");
   serverConfig = serverConfig.replace(/"|,/g, "");
   serverConfig = serverConfig.trimEnd();
