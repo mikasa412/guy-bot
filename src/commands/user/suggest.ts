@@ -29,7 +29,7 @@ export async function execute(
       ephemeral: true
     });
     return;
-  } else if (!config.servers[interaction.guildId].modrole) {
+  } else if (!config.settings.modrole) {
     interaction.reply({
       content: "/setrole the mod role first",
       ephemeral: true

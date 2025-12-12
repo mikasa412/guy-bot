@@ -14,7 +14,8 @@ export const data = new SlashCommandBuilder()
       .addChoices(
         { name: "voting", value: "voting" },
         { name: "todo", value: "todo" },
-        { name: "log", value: "logchannel" }
+        { name: "log", value: "logchannel" },
+        { name: "counting", value: "counting" }
       )
   )
   .addChannelOption(option =>
