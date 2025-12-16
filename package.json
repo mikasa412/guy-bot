@@ -1,7 +1,7 @@
 {
   "name": "guy-bot",
-  "version": "0.1.1",
-  "description": "simple discord bot for me to build skill",
+  "version": "1.0L",
+  "description": "simple discord bot for voter polls",
   "main": "src/index.js",
   "scripts": {
     "build": "tsc",

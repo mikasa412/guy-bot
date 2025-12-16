@@ -8,6 +8,8 @@
         "modrole": "modRoleID",
         "banrole": "banRoleID",
         "timer": 12600
-    },
-    "reactions": []
+        "yesemoji": ""
+        "noemoji": ""
+        "cabbitemoji": ""
+    }
 }
